@@ -50,7 +50,7 @@
     "require-dev": {
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.27",
         "symfony/phpunit-bridge": "^5.2"
     },
     "config": {
