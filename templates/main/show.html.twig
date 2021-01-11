@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{%  block body %}
+{{ model_roweru }}
+
+{# przykladowy komentarz #}
+Ilość modeli: {{  model_list|length }}
+
+
+{% for model in model_list %}
+    <li>{{ model }}</li>
+{% endfor %}
+{% endblock %}
