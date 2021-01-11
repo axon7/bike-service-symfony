@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Bike Service{% endblock %}</title>
         {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}"
+{#        <link rel="stylesheet" href="{{ asset('css/app.css') }}"#}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
