@@ -3,14 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Bike Service{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}"
+        {% endblock %}
     </head>
     <body>
     {%  block header %}
         <nav>
             <ul>
-                <li>Home</li>
-                <li>Login</li>
+                <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
+                <li><a href="{{ path('app_repairs_list') }}">Naprawy</a></li>
+
+
+                <li><a href="">Login</a></li>
+
             </ul>
         </nav>
     {% endblock %}
