@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RepairRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Repair
 {
@@ -26,6 +27,17 @@ class Repair
      * @ORM\Column(type="string", length=255)
      */
     private $bike_model;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $completed;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
 
     public function getId(): ?int
     {
@@ -55,4 +67,39 @@ class Repair
 
         return $this;
     }
+
+    public function getCompleted(): ?bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(bool $completed): self
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    
 }

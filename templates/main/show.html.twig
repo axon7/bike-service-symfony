@@ -10,10 +10,18 @@
 {#{{ model_roweru }}#}
 
 {# przykladowy komentarz #}
-Ilość modeli: {{  model_list|length }}
+Ilość napraw: {{  repair_list|length }}
 
 
-{% for model in model_list %}
-    <li>{{ model }}</li>
+{% for repair in repair_list %}
+    <li>
+        <a href="{{ path('app_repair', {id: repair.id}) }}">
+            <div>Nazwa naprawy: {{ repair.name }}</div>
+            <div>Model roweru: {{ repair.bikemodel }}</div>
+            <div>Ukończono naprawę:
+                    {% if repair.completed %} tak {% else %} nie {% endif %}
+            </div>
+        </a>
+    </li>
 {% endfor %}
 {% endblock %}

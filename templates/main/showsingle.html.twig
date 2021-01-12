@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+
+
+{%  block body %}
+
+
+                <div>Nazwa naprawy: {{ repair.name }}</div>
+                <div>Model roweru: {{ repair.bikemodel }}</div>
+                <div>Ukończono naprawę:
+                    {% if repair.completed %}
+                     tak
+                    {% else %}
+                    nie
+                    {% endif %}
+                </div>
+
+
+{% endblock %}
