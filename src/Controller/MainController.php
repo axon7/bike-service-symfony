@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Repair;
+use App\Repository\RepairRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,12 +25,10 @@ class MainController extends AbstractController
      * @param LoggerInterface $logger
      * @return Response
      */
-    public function show(LoggerInterface $logger): Response
+    public function show(RepairRepository $repairRepository): Response
     {
 
-        $repairs = $this->getDoctrine()
-            ->getRepository(Repair::class)
-            ->findAll();
+        $repairs = $repairRepository->findAll();
         return $this->render('main/show.html.twig', ['repair_list' => $repairs]);
     }
 
