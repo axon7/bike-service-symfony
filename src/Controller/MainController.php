@@ -2,9 +2,11 @@
 namespace App\Controller;
 
 use App\Entity\Repair;
+use App\Repository\RepairCommentRepository;
 use App\Repository\RepairRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,41 +36,43 @@ class MainController extends AbstractController
 
     /**
      * @Route("/naprawa/nowa", name="app_repair_new")
-     * @param EntityManager $entityManager
-     * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @param Request $request
      */
-    public function new(EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $repair = new Repair();
-        $repair->setBikeModel('Unibike Fusion')
+
+        $bikeModel = $request->request->get('bike-model');
+        $name = $request->request->get('name');
+         $repair = new Repair();
+        $repair->setBikeModel($bikeModel)
                 ->setCompleted(false)
-                ->setName('wymiana kierownicy');
+                ->setName($name);
 
         $entityManager->persist($repair);
         $entityManager->flush();
-        return new Response( 'dodaj naprawę');
+
+        return $this->redirectToRoute("app_repairs_list");
     }
 
     /**
      * @Route("/naprawa/{id}", name="app_repair")
+     * @param RepairRepository $repairRepository
+     * @param RepairCommentRepository $repairCommentRepository
+     * @param int $id
      * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function showSingle(int $id): Response
+    public function showSingle(RepairRepository $repairRepository, RepairCommentRepository $repairCommentRepository, int $id): Response
     {
         /** @var Repair|null $repairs */
-        $repair = $this->getDoctrine()
-            ->getRepository(Repair::class)
-            ->findOneBy(['id'=> $id]);
+        $repair = $repairRepository->findOneBy(['id'=> $id]);
+
+        $comments = $repairCommentRepository->findBy(['repair' => $id]);
 
         if(!$repair){
             throw $this->createNotFoundException(sprintf('brak takiej naprawy'));
         }
 
-        return $this->render('main/showsingle.html.twig', ['repair' => $repair]);
+        return $this->render('main/showsingle.html.twig', ['repair' => $repair, 'comments'=>$comments]);
 
 
     }

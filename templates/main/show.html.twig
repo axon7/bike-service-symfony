@@ -8,6 +8,15 @@
 
 {%  block body %}
 {#{{ model_roweru }}#}
+    <form action="{{ path('app_repair_new') }}" method="POST">
+        <div class="vote-arrows vote-arrows-alt flex-fill pt-2" style="min-width: 90px;">
+            <p>Model roweru: <input type="text" name="bike-model" /></p>
+            <p>Nazwa naprawy: <input type="text" name="name" /></p>
+            <p><input type="submit" /></p>
+        </div>
+    </form>
+
+
 
 {# przykladowy komentarz #}
 Ilość napraw: {{  repair_list|length }}

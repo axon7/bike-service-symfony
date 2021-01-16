@@ -5,16 +5,21 @@
 {%  block body %}
 
 
-                <div>Nazwa naprawy: {{ repair.name }}</div>
-                <div>Model roweru: {{ repair.bikemodel }}</div>
-                <div>Ukończono naprawę:
-                    {% if repair.completed %}
-                     tak
-                    {% else %}
-                    nie
-                    {% endif %}
-                </div>
-                <div>Utworzono: {{ repair.createdAt|date("d/m/Y")}}</div>
+<div>Nazwa naprawy: {{ repair.name }}</div>
+<div>Model roweru: {{ repair.bikemodel }}</div>
+<div>Ukończono naprawę:
+    {% if repair.completed %}
+        tak
+    {% else %}
+        nie
+    {% endif %}
+</div>
+<div>Utworzono: {{ repair.createdAt|date("d/m/Y")}}</div>
+<div>Komentarze:
+    {% for comment in comments %}
+        <p>{{ comment.text }}</p>
+    {% endfor %}
+</div>
 
 
 {% endblock %}
