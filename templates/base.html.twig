@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Bike Service{% endblock %}</title>
         {% block stylesheets %}
-{#        <link rel="stylesheet" href="{{ asset('css/app.css') }}"#}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
@@ -14,17 +13,13 @@
             <ul>
                 <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
                 <li><a href="{{ path('app_repairs_list') }}">Naprawy</a></li>
-
-
-                <li><a href="">Login</a></li>
-
+                <li><a href="{{ path('app_login') }}">Login</a></li>
             </ul>
         </nav>
     {% endblock %}
 
     {% block body %}{% endblock %}
     {% block javascripts %}
-
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
     </body>
