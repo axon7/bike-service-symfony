@@ -7,6 +7,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 class UserFixtures extends Fixture
 {
 
@@ -23,8 +24,8 @@ class UserFixtures extends Fixture
          $user->setEmail('test@test.pl');
          $user->setFirstName('test');
          $user->setLastName('test2');
-         $user->setPassword($this->passwordEncoder->encodePassword($user, 'testowehaslo'));
-        $manager->persist($user);
+         $user->setPassword($this->passwordEncoder->encodePassword($user, 'test'));
+         $manager->persist($user);
 
         $manager->flush();
     }
