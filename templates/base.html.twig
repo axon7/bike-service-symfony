@@ -13,7 +13,12 @@
             <ul>
                 <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
                 <li><a href="{{ path('app_repairs_list') }}">Naprawy</a></li>
-                <li><a href="{{ path('app_login') }}">Login</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li><a href="{{ path('app_account')}}">Ustawienia konta</a></li>
+                    <li><a href="{{ path('app_logout') }}">Wyloguj</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}">Zaloguj</a></li>
+                {% endif %}
             </ul>
         </nav>
     {% endblock %}

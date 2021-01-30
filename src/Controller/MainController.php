@@ -29,7 +29,7 @@ class MainController extends AbstractController
      */
     public function show(RepairRepository $repairRepository): Response
     {
-
+//        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $repairs = $repairRepository->findAll();
         return $this->render('main/show.html.twig', ['repair_list' => $repairs]);
     }
@@ -37,6 +37,7 @@ class MainController extends AbstractController
     /**
      * @Route("/naprawa/nowa", name="app_repair_new")
      * @param Request $request
+     * @return Response
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -47,7 +48,6 @@ class MainController extends AbstractController
         $repair->setBikeModel($bikeModel)
                 ->setCompleted(false)
                 ->setName($name);
-
         $entityManager->persist($repair);
         $entityManager->flush();
 
