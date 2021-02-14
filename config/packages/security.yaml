@@ -38,3 +38,5 @@ security:
     access_control:
          - { path: ^/naprawy, roles: ROLE_ADMIN }
          - { path: ^/naprawa/nowa, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+

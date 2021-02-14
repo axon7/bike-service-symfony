@@ -13,6 +13,10 @@
             <ul>
                 <li><a href="{{ path('app_homepage') }}">Strona główna</a></li>
                 <li><a href="{{ path('app_repairs_list') }}">Naprawy</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin')}}">Panel admina</a></li>
+
+                {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <li><a href="{{ path('app_account')}}">Ustawienia konta</a></li>
                     <li><a href="{{ path('app_logout') }}">Wyloguj</a></li>
