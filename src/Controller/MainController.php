@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Repair;
+use App\Entity\RepairComment;
+use App\Form\RepairCommentFormType;
 use App\Repository\RepairCommentRepository;
 use App\Repository\RepairRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,6 +39,7 @@ class MainController extends AbstractController
     /**
      * @Route("/naprawa/nowa", name="app_repair_new")
      * @param Request $request
+     * @param EntityManagerInterface $entityManager
      * @return Response
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -59,9 +62,11 @@ class MainController extends AbstractController
      * @param RepairRepository $repairRepository
      * @param RepairCommentRepository $repairCommentRepository
      * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function showSingle(RepairRepository $repairRepository, RepairCommentRepository $repairCommentRepository, int $id): Response
+    public function showSingle(RepairRepository $repairRepository, RepairCommentRepository $repairCommentRepository, int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var Repair|null $repairs */
         $repair = $repairRepository->findOneBy(['id'=> $id]);
@@ -72,8 +77,22 @@ class MainController extends AbstractController
             throw $this->createNotFoundException(sprintf('brak takiej naprawy'));
         }
 
-        return $this->render('main/showsingle.html.twig', ['repair' => $repair, 'comments'=>$comments]);
+        $comment = new RepairComment();
+        $comment->setRepair($repair);
+        $form = $this->createForm(RepairCommentFormType::class, $comment);
+        $form->handleRequest($request);
 
-
+        if($form->isSubmitted() && $form->isValid()){
+            $comment = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_repair', ['id' => $repair->getId()]);
     }
+//        return $this->render('main/showsingle.html.twig', ['form' => $form->createView()]);
+
+        return $this->render('main/showsingle.html.twig', ['repair' => $repair, 'comments'=>$comments, 'form' => $form->createView()]);
+    }
+
+
 }
