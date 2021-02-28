@@ -27,16 +27,17 @@ class MainController extends AbstractController
 
     /**
      * @Route("/naprawy", name="app_repairs_list")
-     * @param LoggerInterface $logger
+     * @param RepairRepository $repairRepository
+     * @param AuthorizationCheckerInterface $authChecker
      * @return Response
      */
     public function show(RepairRepository $repairRepository, AuthorizationCheckerInterface $authChecker): Response
     {
 
-        if ($authChecker->isGranted('ROLE_ADMIN')) {
+        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
             $repairs = $repairRepository->findAll();
-        } else {
-            echo 'you are not an ADMIN';
+        } else if($authChecker->isGranted('ROLE_USER')) {
+            $repairs = $repairRepository->findBy(['user' => $this->getUser()]);
         }
 
         return $this->render('main/show.html.twig', ['repair_list' => $repairs]);

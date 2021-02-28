@@ -36,6 +36,19 @@ class RepairRepository extends ServiceEntityRepository
     }
     */
 
+
+
+public function findAllByUserID($value): ?Repair
+{
+    return $this->createQueryBuilder('r')
+        ->andWhere('r.user = :val')
+        ->setParameter('val', $value)
+        ->getQuery()
+        ->iterate();
+    ;
+}
+
+
     /*
     public function findOneBySomeField($value): ?Repair
     {
@@ -47,4 +60,6 @@ class RepairRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
 }
