@@ -10,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RepairComment
 {
+    public function __toString()
+    {
+        return $this->text;
+    }
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

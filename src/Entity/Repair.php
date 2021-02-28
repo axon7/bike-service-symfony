@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Repair
 {
+
+    public function __toString()
+    {
+        return $this->name;
+    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

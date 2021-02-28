@@ -4,6 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\RepairComment;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class RepairCommentCrudController extends AbstractCrudController
 {
@@ -12,14 +16,23 @@ class RepairCommentCrudController extends AbstractCrudController
         return RepairComment::class;
     }
 
-    /*
+   public function configureCrud(Crud $crud): Crud
+   {
+        return $crud
+            ->setEntityLabelInSingular('Komentarz do naprawy')
+            ->setEntityLabelInPlural('Komentarze do naprawy');
+//            ->setDefaultSort(['repair' => 'DESC']);
+
+    }
+
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            IdField::new('repair'),
+            TextField::new('text'),
         ];
     }
-    */
+
 }
