@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class MainController extends AbstractController
 {
@@ -29,10 +30,15 @@ class MainController extends AbstractController
      * @param LoggerInterface $logger
      * @return Response
      */
-    public function show(RepairRepository $repairRepository): Response
+    public function show(RepairRepository $repairRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-//        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $repairs = $repairRepository->findAll();
+
+        if ($authChecker->isGranted('ROLE_ADMIN')) {
+            $repairs = $repairRepository->findAll();
+        } else {
+            echo 'you are not an ADMIN';
+        }
+
         return $this->render('main/show.html.twig', ['repair_list' => $repairs]);
     }
 
