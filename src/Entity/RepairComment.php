@@ -4,15 +4,24 @@ namespace App\Entity;
 
 use App\Repository\RepairCommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=RepairCommentRepository::class)
  */
 class RepairComment
 {
+    use TimestampableEntity;
+
+//    public function __construct()
+//    {
+//        $this->created_at = new \DateTime();
+//        $this->updated_at = new \DateTime();
+//    }
+
     public function __toString()
     {
-        return $this->text;
+        return $this->repair;
     }
 
 
