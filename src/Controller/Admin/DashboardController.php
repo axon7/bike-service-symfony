@@ -27,19 +27,19 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Bike Service Symfony');
+            ->setTitle('Bike Service');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToRoute( 'Strona główna','fa fa-home', 'app_homepage');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
-        yield MenuItem::section('Repairs');
-        yield MenuItem::linkToCrud('Repairs', 'fa fa-home', Repair::class);
-        yield MenuItem::linkToCrud('Comments', 'fa fa-home', RepairComment::class);
+        yield MenuItem::section('Naprawy');
+        yield MenuItem::linkToCrud('Naprawy', 'fas fa-wrench', Repair::class);
+        yield MenuItem::linkToCrud('Komentarze', 'fa fa-comment', RepairComment::class);
 
-        yield MenuItem::section('Users');
-        yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
+        yield MenuItem::section('Użytkownicy');
+        yield MenuItem::linkToCrud('Użytkownicy', 'fa fa-user', User::class);
 
 
     }
