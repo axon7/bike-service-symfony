@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MainController extends AbstractController
 {
@@ -54,10 +55,12 @@ class MainController extends AbstractController
 
         $bikeModel = $request->request->get('bike-model');
         $name = $request->request->get('name');
+        $userId = $this->getUser();
          $repair = new Repair();
         $repair->setBikeModel($bikeModel)
                 ->setCompleted(false)
-                ->setName($name);
+                ->setName($name)
+                ->setUser($userId);
         $entityManager->persist($repair);
         $entityManager->flush();
 
