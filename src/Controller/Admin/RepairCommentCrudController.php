@@ -32,8 +32,8 @@ class RepairCommentCrudController extends AbstractCrudController
     {
 
         yield TextField::new('text');
-            yield AssociationField::new('repair');
-//            yield DateField::new('created_at')->onlyOnIndex();
+        yield AssociationField::new('repair');
+        yield DateField::new('created_at')->onlyOnIndex();
 
     }
 
