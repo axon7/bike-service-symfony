@@ -16,6 +16,7 @@ class UserRegistrationFormType extends AbstractType
             ->add('password')
             ->add('firstName')
             ->add('lastName')
+            ->add('phone')
         ;
     }
 
