@@ -3,14 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\RepairRepository;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RepairRepository::class)
- * @ORM\HasLifecycleCallbacks()
  */
 class Repair
 {
+    use TimestampableEntity;
 
     public function __toString()
     {
@@ -38,10 +39,6 @@ class Repair
      */
     private $completed;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="repairs")
@@ -89,27 +86,6 @@ class Repair
         $this->completed = $completed;
 
         return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-
-    public function setCreatedAtValue()
-    {
-        $this->createdAt = new \DateTime();
     }
 
     public function getUser(): ?User
